@@ -2,6 +2,18 @@
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Application Name
+    |--------------------------------------------------------------------------
+    |
+    | This value is the name of your application. This value is used when the
+    | framework needs to place the application's name in a notification or
+    | any other location as required by the application or its packages.
+    */
+
+    'name' => 'My Application',
+
 
     'env' => env('APP_ENV', 'production'),
 
@@ -130,6 +142,7 @@ return [
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
@@ -155,6 +168,7 @@ return [
          */
         BookStack\Providers\AuthServiceProvider::class,
         BookStack\Providers\AppServiceProvider::class,
+        // BookStack\Providers\BroadcastServiceProvider::class,
         BookStack\Providers\EventServiceProvider::class,
         BookStack\Providers\RouteServiceProvider::class,
         BookStack\Providers\CustomFacadeProvider::class,

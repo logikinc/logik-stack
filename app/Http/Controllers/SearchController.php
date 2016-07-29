@@ -170,7 +170,7 @@ class SearchController extends Controller
             $entities = $entities->sortByDesc('title_relevance');
         } else {
             $entityNames = $entityTypes->map(function ($type) {
-                return 'BookStack\\' . ucfirst($type);
+                return \BookStack\\::class . ucfirst($type);
             })->toArray();
             $entities = $this->viewService->getPopular(20, 0, $entityNames);
         }

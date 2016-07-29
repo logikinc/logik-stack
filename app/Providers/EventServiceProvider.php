@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'BookStack\Events\SomeEvent' => [
-            'BookStack\Listeners\EventListener',
+        \BookStack\Events\SomeEvent::class => [
+            \BookStack\Listeners\EventListener::class,
         ],
     ];
 

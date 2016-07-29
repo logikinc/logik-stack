@@ -58,7 +58,7 @@ function userCan($permission, Ownable $ownable = null)
  */
 function setting($key, $default = false)
 {
-    $settingService = app('BookStack\Services\SettingService');
+    $settingService = app(\BookStack\Services\SettingService::class);
     return $settingService->get($key, $default);
 }
 

@@ -91,5 +91,4 @@ class ImageTest extends TestCase
 
         $this->assertFalse(file_exists(public_path($relPath)), 'Uploaded image has been deleted');
     }
-
 }

@@ -1,6 +1,5 @@
 <?php namespace BookStack\Repos;
 
-
 use BookStack\Exceptions\PermissionsException;
 use BookStack\RolePermission;
 use BookStack\Role;
@@ -90,7 +89,9 @@ class PermissionsRepo
     {
         $role = $this->role->findOrFail($roleId);
 
-        if ($role->hidden) throw new PermissionsException("Cannot update a hidden role");
+        if ($role->hidden) {
+            throw new PermissionsException("Cannot update a hidden role");
+        }
 
         $permissions = isset($roleData['permissions']) ? array_keys($roleData['permissions']) : [];
         $this->assignRolePermissions($role, $permissions);
@@ -151,5 +152,4 @@ class PermissionsRepo
         $this->permissionService->deleteJointPermissionsForRole($role);
         $role->delete();
     }
-
 }

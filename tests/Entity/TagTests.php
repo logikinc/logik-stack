@@ -122,7 +122,9 @@ class TagTests extends \TestCase
         $testDataCorrect = true;
         foreach ($updateData->tags as $data) {
             $testItem = ['name' => $data->name, 'value' => $data->value];
-            if (!in_array($testItem, $testResponseJsonData)) $testDataCorrect = false;
+            if (!in_array($testItem, $testResponseJsonData)) {
+                $testDataCorrect = false;
+            }
         }
         $testMessage = "Expected data was not found in the response.\nExpected Data: %s\nRecieved Data: %s";
         $this->assertTrue($testDataCorrect, sprintf($testMessage, json_encode($testResponseJsonData), json_encode($updateData)));
@@ -137,10 +139,11 @@ class TagTests extends \TestCase
         $testDataCorrect = true;
         foreach ($getResponseData as $data) {
             $testItem = ['name' => $data->name, 'value' => $data->value];
-            if (!in_array($testItem, $testResponseJsonData)) $testDataCorrect = false;
+            if (!in_array($testItem, $testResponseJsonData)) {
+                $testDataCorrect = false;
+            }
         }
         $testMessage = "Expected data was not found in the response.\nExpected Data: %s\nRecieved Data: %s";
         $this->assertTrue($testDataCorrect, sprintf($testMessage, json_encode($testResponseJsonData), json_encode($getResponseData)));
     }
-
 }

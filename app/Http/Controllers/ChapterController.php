@@ -161,7 +161,8 @@ class ChapterController extends Controller
      * @return mixed
      * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function showMove($bookSlug, $chapterSlug) {
+    public function showMove($bookSlug, $chapterSlug)
+    {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
         $this->checkOwnablePermission('chapter-update', $chapter);
@@ -179,7 +180,8 @@ class ChapterController extends Controller
      * @return mixed
      * @throws \BookStack\Exceptions\NotFoundException
      */
-    public function move($bookSlug, $chapterSlug, Request $request) {
+    public function move($bookSlug, $chapterSlug, Request $request)
+    {
         $book = $this->bookRepo->getBySlug($bookSlug);
         $chapter = $this->chapterRepo->getBySlug($chapterSlug, $book->id);
         $this->checkOwnablePermission('chapter-update', $chapter);

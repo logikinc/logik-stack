@@ -81,7 +81,9 @@ class ImageController extends Controller
         ]);
 
         $validFilters = collect(['page', 'book']);
-        if (!$validFilters->contains($filter)) return response('Invalid filter', 500);
+        if (!$validFilters->contains($filter)) {
+            return response('Invalid filter', 500);
+        }
 
         $pageId = $request->get('page_id');
         $imgData = $this->imageRepo->getGalleryFiltered($page, 24, strtolower($filter), $pageId);
@@ -171,6 +173,4 @@ class ImageController extends Controller
         $this->imageRepo->destroyImage($image);
         return response()->json('Image Deleted');
     }
-
-
 }

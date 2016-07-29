@@ -14,7 +14,8 @@ class RolesTest extends TestCase
     {
         $role = \BookStack\Role::getRole('viewer');
         $viewer = $this->getNewBlankUser();
-        $viewer->attachRole($role);;
+        $viewer->attachRole($role);
+        ;
         return $viewer;
     }
 
@@ -191,7 +192,7 @@ class RolesTest extends TestCase
         }
         foreach ($visibles as $url => $text) {
             $this->actingAs($this->user)->visit('/')->visit($url)
-                ->dontSeeInElement('.action-buttons',$text);
+                ->dontSeeInElement('.action-buttons', $text);
         }
 
         $this->giveUserPermissions($this->user, [$permission]);
@@ -564,7 +565,5 @@ class RolesTest extends TestCase
         $this->asAdmin()->visit('/settings')
             ->seeElement('[data-role-name="admin"]')
             ->dontSeeElement('[data-role-name="public"]');
-
     }
-
 }

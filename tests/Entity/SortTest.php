@@ -64,5 +64,4 @@ class SortTest extends TestCase
         $this->visit($pageToCheck->getUrl())
             ->see($newBook->name);
     }
-
 }

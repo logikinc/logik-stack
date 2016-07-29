@@ -47,5 +47,4 @@ class MarkdownTest extends TestCase
         $this->asAdmin()->visit($this->page->getUrl() . '/edit')
             ->seeInField('markdown', $this->page->html);
     }
-
 }

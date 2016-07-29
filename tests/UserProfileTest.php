@@ -76,5 +76,4 @@ class UserProfileTest extends TestCase
             ->seePageIs('/user/' . $newUser->id)
             ->see($newUser->name);
     }
-    
 }

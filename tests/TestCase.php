@@ -46,8 +46,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      * Get the current admin user.
      * @return mixed
      */
-    public function getAdmin() {
-        if($this->admin === null) {
+    public function getAdmin()
+    {
+        if ($this->admin === null) {
             $adminRole = \BookStack\Role::getRole('admin');
             $this->admin = $adminRole->users->first();
         }
@@ -60,7 +61,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function asEditor()
     {
-        if($this->editor === null) {
+        if ($this->editor === null) {
             $this->editor = $this->getEditor();
         }
         return $this->actingAs($this->editor);
@@ -86,7 +87,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     protected function createEntityChainBelongingToUser($creatorUser, $updaterUser = false)
     {
-        if ($updaterUser === false) $updaterUser = $creatorUser;
+        if ($updaterUser === false) {
+            $updaterUser = $creatorUser;
+        }
         $book = factory(BookStack\Book::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
         $chapter = factory(BookStack\Chapter::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id]);
         $page = factory(BookStack\Page::class)->create(['created_by' => $creatorUser->id, 'updated_by' => $updaterUser->id, 'book_id' => $book->id]);
@@ -110,7 +113,8 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     {
         $user = factory(\BookStack\User::class)->create($attributes);
         $role = \BookStack\Role::getRole('editor');
-        $user->attachRole($role);;
+        $user->attachRole($role);
+        ;
         return $user;
     }
 
@@ -161,7 +165,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     protected function seePageUrlIs($uri)
     {
         $this->assertEquals(
-            $uri, $this->currentUri, "Did not land on expected page [{$uri}].\n"
+            $uri,
+            $this->currentUri,
+            "Did not land on expected page [{$uri}].\n"
         );
 
         return $this;

@@ -64,7 +64,9 @@ class PageRepo extends EntityRepo
     public function getBySlug($slug, $bookId)
     {
         $page = $this->pageQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($page === null) throw new NotFoundException('Page not found');
+        if ($page === null) {
+            throw new NotFoundException('Page not found');
+        }
         return $page;
     }
 
@@ -123,7 +125,9 @@ class PageRepo extends EntityRepo
         $page = $this->newFromInput($input);
         $page->slug = $this->findSuitableSlug($page->name, $book->id);
 
-        if ($chapterId) $page->chapter_id = $chapterId;
+        if ($chapterId) {
+            $page->chapter_id = $chapterId;
+        }
 
         $page->html = $this->formatHtml($input['html']);
         $page->text = strip_tags($page->html);
@@ -176,7 +180,9 @@ class PageRepo extends EntityRepo
         $page->updated_by = auth()->user()->id;
         $page->draft = true;
 
-        if ($chapter) $page->chapter_id = $chapter->id;
+        if ($chapter) {
+            $page->chapter_id = $chapter->id;
+        }
 
         $book->pages()->save($page);
         $this->permissionService->buildJointPermissionsForEntity($page);
@@ -191,7 +197,9 @@ class PageRepo extends EntityRepo
      */
     protected function formatHtml($htmlText)
     {
-        if ($htmlText == '') return $htmlText;
+        if ($htmlText == '') {
+            return $htmlText;
+        }
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
         $doc->loadHTML(mb_convert_encoding($htmlText, 'HTML-ENTITIES', 'UTF-8'));
@@ -205,7 +213,9 @@ class PageRepo extends EntityRepo
 
         foreach ($childNodes as $index => $childNode) {
             /** @var \DOMElement $childNode */
-            if (get_class($childNode) !== 'DOMElement') continue;
+            if (get_class($childNode) !== 'DOMElement') {
+                continue;
+            }
 
             // Overwrite id if not a BookStack custom id
             if ($childNode->hasAttribute('id')) {
@@ -329,7 +339,9 @@ class PageRepo extends EntityRepo
         $page->fill($input);
         $page->html = $this->formatHtml($input['html']);
         $page->text = strip_tags($page->html);
-        if (setting('app-editor') !== 'markdown') $page->markdown = '';
+        if (setting('app-editor') !== 'markdown') {
+            $page->markdown = '';
+        }
         $page->updated_by = $userId;
         $page->save();
 
@@ -372,7 +384,9 @@ class PageRepo extends EntityRepo
     public function saveRevision(Page $page, $summary = null)
     {
         $revision = $this->pageRevision->fill($page->toArray());
-        if (setting('app-editor') !== 'markdown') $revision->markdown = '';
+        if (setting('app-editor') !== 'markdown') {
+            $revision->markdown = '';
+        }
         $revision->page_id = $page->id;
         $revision->slug = $page->slug;
         $revision->book_slug = $page->book->slug;
@@ -412,7 +426,9 @@ class PageRepo extends EntityRepo
         }
 
         $draft->fill($data);
-        if (setting('app-editor') !== 'markdown') $draft->markdown = '';
+        if (setting('app-editor') !== 'markdown') {
+            $draft->markdown = '';
+        }
 
         $draft->save();
         return $draft;
@@ -558,7 +574,9 @@ class PageRepo extends EntityRepo
     public function doesSlugExist($slug, $bookId, $currentId = false)
     {
         $query = $this->page->where('slug', '=', $slug)->where('book_id', '=', $bookId);
-        if ($currentId) $query = $query->where('id', '!=', $currentId);
+        if ($currentId) {
+            $query = $query->where('id', '!=', $currentId);
+        }
         return $query->count() > 0;
     }
 
@@ -645,5 +663,4 @@ class PageRepo extends EntityRepo
     {
         return $this->pageQuery()->orderBy('updated_at', 'desc')->paginate($count);
     }
-
 }

@@ -256,5 +256,4 @@ class EntityTest extends TestCase
         $this->asAdmin()->visit('/')
             ->seeInElement('#recently-created-pages', $entityChain['page']->name);
     }
-
 }

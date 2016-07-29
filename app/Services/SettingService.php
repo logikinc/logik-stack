@@ -53,7 +53,9 @@ class SettingService
     {
         // Check for an overriding value
         $overrideValue = $this->getOverrideValue($key);
-        if ($overrideValue !== null) return $overrideValue;
+        if ($overrideValue !== null) {
+            return $overrideValue;
+        }
 
         // Check the cache
         $cacheKey = $this->cachePrefix . $key;
@@ -99,11 +101,17 @@ class SettingService
     protected function formatValue($value, $default)
     {
         // Change string booleans to actual booleans
-        if ($value === 'true') $value = true;
-        if ($value === 'false') $value = false;
+        if ($value === 'true') {
+            $value = true;
+        }
+        if ($value === 'false') {
+            $value = false;
+        }
 
         // Set to default if empty
-        if ($value === '') $value = $default;
+        if ($value === '') {
+            $value = $default;
+        }
         return $value;
     }
 
@@ -170,8 +178,9 @@ class SettingService
      */
     protected function getOverrideValue($key)
     {
-        if ($key === 'registration-enabled' && config('auth.method') === 'ldap') return false;
+        if ($key === 'registration-enabled' && config('auth.method') === 'ldap') {
+            return false;
+        }
         return null;
     }
-
 }

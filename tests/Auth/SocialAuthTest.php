@@ -31,5 +31,4 @@ class SocialAuthTest extends TestCase
         $user = $user->whereEmail($user->email)->first();
         $this->seeInDatabase('social_accounts', ['user_id' => $user->id]);
     }
-
 }

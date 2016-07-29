@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace BookStack\Http\Controllers\Auth;
 
-use App\User;
+use BookStack\User;
 use Validator;
-use App\Http\Controllers\Controller;
+use BookStack\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller

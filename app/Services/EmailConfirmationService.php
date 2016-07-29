@@ -1,6 +1,5 @@
 <?php namespace BookStack\Services;
 
-
 use Carbon\Carbon;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Mail\Message;
@@ -97,6 +96,4 @@ class EmailConfirmationService
         }
         return $token;
     }
-
-
 }

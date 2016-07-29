@@ -1,6 +1,5 @@
 <?php namespace BookStack\Repos;
 
-
 use BookStack\Image;
 use BookStack\Page;
 use BookStack\Services\ImageService;
@@ -193,6 +192,4 @@ class ImageRepo
     {
         return $this->imageService->getThumbnail($image, $width, $height, $keepRatio);
     }
-
-
 }

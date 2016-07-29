@@ -18,7 +18,8 @@ class RestrictionsTest extends TestCase
     {
         $role = \BookStack\Role::getRole('viewer');
         $viewer = $this->getNewBlankUser();
-        $viewer->attachRole($role);;
+        $viewer->attachRole($role);
+        ;
         return $viewer;
     }
 
@@ -521,5 +522,4 @@ class RestrictionsTest extends TestCase
         $this->visit($bookChapter->getUrl() . '/delete')
             ->see('Delete Chapter');
     }
-
 }

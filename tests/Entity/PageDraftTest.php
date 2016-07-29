@@ -93,5 +93,4 @@ class PageDraftTest extends TestCase
             ->visit($chapter->getUrl())
             ->dontSeeInElement('.page-list', 'New Page');
     }
-
 }

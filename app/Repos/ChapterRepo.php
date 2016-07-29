@@ -1,6 +1,5 @@
 <?php namespace BookStack\Repos;
 
-
 use Activity;
 use BookStack\Book;
 use BookStack\Exceptions\NotFoundException;
@@ -69,7 +68,9 @@ class ChapterRepo extends EntityRepo
     public function getBySlug($slug, $bookId)
     {
         $chapter = $this->chapterQuery()->where('slug', '=', $slug)->where('book_id', '=', $bookId)->first();
-        if ($chapter === null) throw new NotFoundException('Chapter not found');
+        if ($chapter === null) {
+            throw new NotFoundException('Chapter not found');
+        }
         return $chapter;
     }
 
@@ -81,9 +82,11 @@ class ChapterRepo extends EntityRepo
     {
         $pages = $this->permissionService->enforcePageRestrictions($chapter->pages())->get();
         // Sort items with drafts first then by priority.
-        return $pages->sortBy(function($child, $key) {
+        return $pages->sortBy(function ($child, $key) {
             $score = $child->priority;
-            if ($child->draft) $score -= 100;
+            if ($child->draft) {
+                $score -= 100;
+            }
             return $score;
         });
     }
@@ -218,5 +221,4 @@ class ChapterRepo extends EntityRepo
 
         return $chapter;
     }
-
 }

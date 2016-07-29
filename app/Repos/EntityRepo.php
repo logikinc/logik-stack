@@ -178,7 +178,9 @@ class EntityRepo
         } else {
             $terms = [];
         }
-        if (!empty($termString)) $terms = array_merge($terms, explode(' ', $termString));
+        if (!empty($termString)) {
+            $terms = array_merge($terms, explode(' ', $termString));
+        }
         return $terms;
     }
 
@@ -234,10 +236,11 @@ class EntityRepo
      * @param $tags
      * @return mixed
      */
-    protected function applyTagSearches($query, $tags) {
-        $query->where(function($query) use ($tags) {
+    protected function applyTagSearches($query, $tags)
+    {
+        $query->where(function ($query) use ($tags) {
             foreach ($tags[1] as $index => $tagName) {
-                $query->whereHas('tags', function($query) use ($tags, $index, $tagName) {
+                $query->whereHas('tags', function ($query) use ($tags, $index, $tagName) {
                     $tagOperator = $tags[3][$index];
                     $tagValue = $tags[4][$index];
                     if (!empty($tagOperator) && !empty($tagValue) && in_array($tagOperator, $this->queryOperators)) {
@@ -258,17 +261,4 @@ class EntityRepo
         });
         return $query;
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

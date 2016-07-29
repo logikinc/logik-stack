@@ -26,7 +26,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'       => \BookStack\Http\Middleware\Authenticate::class,
+        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest'      => \BookStack\Http\Middleware\RedirectIfAuthenticated::class,
         'perm'       => \BookStack\Http\Middleware\PermissionMiddleware::class

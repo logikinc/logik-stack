@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 class Chapter extends Entity
 {
     protected $fillable = ['name', 'description', 'priority', 'book_id'];
@@ -43,5 +42,4 @@ class Chapter extends Entity
         $description = $this->description;
         return strlen($description) > $length ? substr($description, 0, $length-3) . '...' : $description;
     }
-
 }

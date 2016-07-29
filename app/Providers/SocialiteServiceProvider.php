@@ -1,6 +1,5 @@
 <?php namespace BookStack\Providers;
 
-
 use Illuminate\Support\ServiceProvider;
 
 class SocialiteServiceProvider extends ServiceProvider

@@ -1,6 +1,5 @@
 <?php namespace BookStack\Services;
 
-
 use BookStack\Exceptions\LdapException;
 use Illuminate\Contracts\Auth\Authenticatable;
 
@@ -42,7 +41,9 @@ class LdapService
         $userFilter = $this->buildFilter($this->config['user_filter'], ['user' => $userName]);
         $baseDn = $this->config['base_dn'];
         $users = $this->ldap->searchAndGetEntries($ldapConnection, $baseDn, $userFilter, ['cn', 'uid', 'dn', 'mail']);
-        if ($users['count'] === 0) return null;
+        if ($users['count'] === 0) {
+            return null;
+        }
 
         $user = $users[0];
         return [
@@ -63,8 +64,12 @@ class LdapService
     public function validateUserCredentials(Authenticatable $user, $username, $password)
     {
         $ldapUser = $this->getUserDetails($username);
-        if ($ldapUser === null) return false;
-        if ($ldapUser['uid'] !== $user->external_auth_id) return false;
+        if ($ldapUser === null) {
+            return false;
+        }
+        if ($ldapUser['uid'] !== $user->external_auth_id) {
+            return false;
+        }
 
         $ldapConnection = $this->getConnection();
         try {
@@ -94,7 +99,9 @@ class LdapService
             $ldapBind = $this->ldap->bind($connection, $ldapDn, $ldapPass);
         }
 
-        if (!$ldapBind) throw new LdapException('LDAP access failed using ' . ($isAnonymous ? ' anonymous bind.' : ' given dn & pass details'));
+        if (!$ldapBind) {
+            throw new LdapException('LDAP access failed using ' . ($isAnonymous ? ' anonymous bind.' : ' given dn & pass details'));
+        }
     }
 
     /**
@@ -105,7 +112,9 @@ class LdapService
      */
     protected function getConnection()
     {
-        if ($this->ldapConnection !== null) return $this->ldapConnection;
+        if ($this->ldapConnection !== null) {
+            return $this->ldapConnection;
+        }
 
         // Check LDAP extension in installed
         if (!function_exists('ldap_connect') && config('app.env') !== 'testing') {
@@ -144,5 +153,4 @@ class LdapService
         }
         return strtr($filterString, $newAttrs);
     }
-
 }

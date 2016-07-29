@@ -10,8 +10,12 @@ if (env('REDIS_SERVERS', false)) {
     foreach ($redisServers as $index => $redisServer) {
         $redisServerName = ($index === 0) ? 'default' : 'redis-server-' . $index;
         $redisServerDetails = explode(':', $redisServer);
-        if (count($redisServerDetails) < 2) $redisServerDetails[] = '6379';
-        if (count($redisServerDetails) < 3) $redisServerDetails[] = '0';
+        if (count($redisServerDetails) < 2) {
+            $redisServerDetails[] = '6379';
+        }
+        if (count($redisServerDetails) < 3) {
+            $redisServerDetails[] = '0';
+        }
         $redisConfig[$redisServerName] = array_combine($redisServerKeys, $redisServerDetails);
     }
 }

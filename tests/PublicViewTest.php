@@ -37,5 +37,4 @@ class PublicViewTest extends TestCase
             ->see($chapterToVisit->name)
             ->seePageIs($pageToVisit->getUrl());
     }
-
 }

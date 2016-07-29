@@ -39,7 +39,9 @@ class TagController extends Controller
     public function updateForEntity($entityType, $entityId, Request $request)
     {
         $entity = $this->tagRepo->getEntity($entityType, $entityId, 'update');
-        if ($entity === null) return $this->jsonError("Entity not found", 404);
+        if ($entity === null) {
+            return $this->jsonError("Entity not found", 404);
+        }
 
         $inputTags = $request->input('tags');
         $tags = $this->tagRepo->saveTagsToEntity($entity, $inputTags);
@@ -71,5 +73,4 @@ class TagController extends Controller
         $suggestions = $this->tagRepo->getValueSuggestions($searchTerm, $tagName);
         return response()->json($suggestions);
     }
-
 }

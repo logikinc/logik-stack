@@ -102,7 +102,8 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             $this->throwValidationException(
-                $request, $validator
+                $request,
+                $validator
             );
         }
 
@@ -122,7 +123,9 @@ class AuthController extends Controller
     protected function authenticated(Request $request, Authenticatable $user)
     {
         // Explicitly log them out for now if they do no exist.
-        if (!$user->exists) auth()->logout($user);
+        if (!$user->exists) {
+            auth()->logout($user);
+        }
 
         if (!$user->exists && $user->email === null && !$request->has('email')) {
             $request->flash();
@@ -135,7 +138,6 @@ class AuthController extends Controller
         }
 
         if (!$user->exists) {
-
             // Check for users with same email already
             $alreadyUser = $user->newQuery()->where('email', '=', $user->email)->count() > 0;
             if ($alreadyUser) {
@@ -333,5 +335,4 @@ class AuthController extends Controller
     {
         return $this->socialAuthService->detachSocialAccount($socialDriver);
     }
-
 }

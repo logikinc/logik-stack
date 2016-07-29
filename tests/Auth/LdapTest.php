@@ -130,5 +130,4 @@ class LdapTest extends \TestCase
         $this->actingAs($testUser)->visit('/settings/users/' . $testUser->id)
             ->dontSee('External Authentication');
     }
-
 }

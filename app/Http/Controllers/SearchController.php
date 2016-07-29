@@ -65,7 +65,9 @@ class SearchController extends Controller
      */
     public function searchPages(Request $request)
     {
-        if (!$request->has('term')) return redirect()->back();
+        if (!$request->has('term')) {
+            return redirect()->back();
+        }
 
         $searchTerm = $request->get('term');
         $paginationAppends = $request->only('term');
@@ -85,7 +87,9 @@ class SearchController extends Controller
      */
     public function searchChapters(Request $request)
     {
-        if (!$request->has('term')) return redirect()->back();
+        if (!$request->has('term')) {
+            return redirect()->back();
+        }
 
         $searchTerm = $request->get('term');
         $paginationAppends = $request->only('term');
@@ -105,7 +109,9 @@ class SearchController extends Controller
      */
     public function searchBooks(Request $request)
     {
-        if (!$request->has('term')) return redirect()->back();
+        if (!$request->has('term')) {
+            return redirect()->back();
+        }
 
         $searchTerm = $request->get('term');
         $paginationAppends = $request->only('term');
@@ -152,9 +158,15 @@ class SearchController extends Controller
 
         // Search for entities otherwise show most popular
         if ($searchTerm !== false) {
-            if ($entityTypes->contains('page')) $entities = $entities->merge($this->pageRepo->getBySearch($searchTerm)->items());
-            if ($entityTypes->contains('chapter')) $entities = $entities->merge($this->chapterRepo->getBySearch($searchTerm)->items());
-            if ($entityTypes->contains('book')) $entities = $entities->merge($this->bookRepo->getBySearch($searchTerm)->items());
+            if ($entityTypes->contains('page')) {
+                $entities = $entities->merge($this->pageRepo->getBySearch($searchTerm)->items());
+            }
+            if ($entityTypes->contains('chapter')) {
+                $entities = $entities->merge($this->chapterRepo->getBySearch($searchTerm)->items());
+            }
+            if ($entityTypes->contains('book')) {
+                $entities = $entities->merge($this->bookRepo->getBySearch($searchTerm)->items());
+            }
             $entities = $entities->sortByDesc('title_relevance');
         } else {
             $entityNames = $entityTypes->map(function ($type) {
@@ -165,7 +177,4 @@ class SearchController extends Controller
 
         return view('search/entity-ajax-list', ['entities' => $entities]);
     }
-
 }
-
-

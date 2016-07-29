@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 class Page extends Entity
 {
     protected $fillable = ['name', 'html', 'priority', 'markdown'];
@@ -76,5 +75,4 @@ class Page extends Entity
         $text = strlen($this->text) > $length ? substr($this->text, 0, $length-3) . '...' : $this->text;
         return mb_convert_encoding($text, 'UTF-8');
     }
-
 }

@@ -39,7 +39,9 @@ class PermissionService
         $userSet = $this->currentUser !== null;
         $this->userRoles = false;
         $this->isAdmin = $userSet ? $this->currentUser->hasRole('admin') : false;
-        if (!$userSet) $this->currentUser = new User();
+        if (!$userSet) {
+            $this->currentUser = new User();
+        }
 
         $this->jointPermission = $jointPermission;
         $this->role = $role;
@@ -54,7 +56,9 @@ class PermissionService
      */
     protected function getRoles()
     {
-        if ($this->userRoles !== false) return $this->userRoles;
+        if ($this->userRoles !== false) {
+            return $this->userRoles;
+        }
 
         $roles = [];
 
@@ -237,29 +241,28 @@ class PermissionService
         $restrictionAction = end($explodedAction);
 
         if ($entity->isA('book')) {
-
             if (!$entity->restricted) {
                 return $this->createJointPermissionDataArray($entity, $role, $action, $roleHasPermission, $roleHasPermissionOwn);
             } else {
                 $hasAccess = $entity->hasActiveRestriction($role->id, $restrictionAction);
                 return $this->createJointPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
             }
-
         } elseif ($entity->isA('chapter')) {
-
             if (!$entity->restricted) {
                 $hasExplicitAccessToBook = $entity->book->hasActiveRestriction($role->id, $restrictionAction);
                 $hasPermissiveAccessToBook = !$entity->book->restricted;
-                return $this->createJointPermissionDataArray($entity, $role, $action,
+                return $this->createJointPermissionDataArray(
+                    $entity,
+                    $role,
+                    $action,
                     ($hasExplicitAccessToBook || ($roleHasPermission && $hasPermissiveAccessToBook)),
-                    ($hasExplicitAccessToBook || ($roleHasPermissionOwn && $hasPermissiveAccessToBook)));
+                    ($hasExplicitAccessToBook || ($roleHasPermissionOwn && $hasPermissiveAccessToBook))
+                );
             } else {
                 $hasAccess = $entity->hasActiveRestriction($role->id, $restrictionAction);
                 return $this->createJointPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
             }
-
         } elseif ($entity->isA('page')) {
-
             if (!$entity->restricted) {
                 $hasExplicitAccessToBook = $entity->book->hasActiveRestriction($role->id, $restrictionAction);
                 $hasPermissiveAccessToBook = !$entity->book->restricted;
@@ -270,7 +273,10 @@ class PermissionService
                 $hasExplicitAccessToParents = $acknowledgeChapter ? $hasExplicitAccessToChapter : $hasExplicitAccessToBook;
                 $hasPermissiveAccessToParents = $acknowledgeChapter ? $hasPermissiveAccessToChapter : $hasPermissiveAccessToBook;
 
-                return $this->createJointPermissionDataArray($entity, $role, $action,
+                return $this->createJointPermissionDataArray(
+                    $entity,
+                    $role,
+                    $action,
                     ($hasExplicitAccessToParents || ($roleHasPermission && $hasPermissiveAccessToParents)),
                     ($hasExplicitAccessToParents || ($roleHasPermissionOwn && $hasPermissiveAccessToParents))
                 );
@@ -278,7 +284,6 @@ class PermissionService
                 $hasAccess = $entity->hasRestriction($role->id, $action);
                 return $this->createJointPermissionDataArray($entity, $role, $action, $hasAccess, $hasAccess);
             }
-
         }
     }
 
@@ -314,7 +319,9 @@ class PermissionService
      */
     public function checkOwnableUserAccess(Ownable $ownable, $permission)
     {
-        if ($this->isAdmin) return true;
+        if ($this->isAdmin) {
+            return true;
+        }
         $explodedPermission = explode('-', $permission);
 
         $baseQuery = $ownable->where('id', '=', $ownable->id);
@@ -434,7 +441,9 @@ class PermissionService
      */
     public function enforceEntityRestrictions($query, $action = 'view')
     {
-        if ($this->isAdmin) return $query;
+        if ($this->isAdmin) {
+            return $query;
+        }
         $this->currentAction = $action;
         return $this->entityRestrictionQuery($query);
     }
@@ -449,7 +458,9 @@ class PermissionService
      */
     public function filterRestrictedEntityRelations($query, $tableName, $entityIdColumn, $entityTypeColumn)
     {
-        if ($this->isAdmin) return $query;
+        if ($this->isAdmin) {
+            return $query;
+        }
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn, 'entityTypeColumn' => $entityTypeColumn];
 
@@ -468,7 +479,6 @@ class PermissionService
                     });
             });
         });
-
     }
 
     /**
@@ -480,7 +490,9 @@ class PermissionService
      */
     public function filterRelatedPages($query, $tableName, $entityIdColumn)
     {
-        if ($this->isAdmin) return $query;
+        if ($this->isAdmin) {
+            return $query;
+        }
         $this->currentAction = 'view';
         $tableDetails = ['tableName' => $tableName, 'entityIdColumn' => $entityIdColumn];
 
@@ -502,5 +514,4 @@ class PermissionService
             })->orWhere($tableDetails['entityIdColumn'], '=', 0);
         });
     }
-
 }

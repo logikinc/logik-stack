@@ -51,5 +51,4 @@ class Book extends Entity
         $description = $this->description;
         return strlen($description) > $length ? substr($description, 0, $length-3) . '...' : $description;
     }
-
 }

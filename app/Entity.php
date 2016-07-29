@@ -1,6 +1,5 @@
 <?php namespace BookStack;
 
-
 class Entity extends Ownable
 {
 
@@ -24,7 +23,9 @@ class Entity extends Ownable
     {
         $matches = [get_class($this), $this->id] === [get_class($entity), $entity->id];
 
-        if ($matches) return true;
+        if ($matches) {
+            return true;
+        }
 
         if (($entity->isA('chapter') || $entity->isA('page')) && $this->isA('book')) {
             return $entity->book_id === $this->id;
@@ -146,7 +147,9 @@ class Entity extends Ownable
      */
     public function getShortName($length = 25)
     {
-        if (strlen($this->name) <= $length) return $this->name;
+        if (strlen($this->name) <= $length) {
+            return $this->name;
+        }
         return substr($this->name, 0, $length - 3) . '...';
     }
 
@@ -173,7 +176,9 @@ class Entity extends Ownable
                 } else {
                     $term = '' . $term . '*';
                 }
-                if ($term !== '*') $terms[$key] = $term;
+                if ($term !== '*') {
+                    $terms[$key] = $term;
+                }
             }
             $termString = implode(' ', $terms);
             $fields = implode(',', $fieldsToSearch);
@@ -206,5 +211,4 @@ class Entity extends Ownable
 
         return $search->orderBy($orderBy, 'desc');
     }
-    
 }

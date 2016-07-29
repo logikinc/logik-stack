@@ -37,7 +37,9 @@ class SettingController extends Controller
 
         // Cycles through posted settings and update them
         foreach ($request->all() as $name => $value) {
-            if (strpos($name, 'setting-') !== 0) continue;
+            if (strpos($name, 'setting-') !== 0) {
+                continue;
+            }
             $key = str_replace('setting-', '', trim($name));
             Setting::put($key, $value);
         }
@@ -45,5 +47,4 @@ class SettingController extends Controller
         session()->flash('success', 'Settings Saved');
         return redirect('/settings');
     }
-
 }

@@ -66,7 +66,9 @@ class ImageService
     {
         $imageName = $imageName ? $imageName : basename($url);
         $imageData = file_get_contents($url);
-        if($imageData === false) throw new \Exception('Cannot get image from ' . $url);
+        if ($imageData === false) {
+            throw new \Exception('Cannot get image from ' . $url);
+        }
         return $this->saveNew($imageName, $imageData, $type);
     }
 
@@ -85,7 +87,9 @@ class ImageService
         $secureUploads = setting('app-secure-images');
         $imageName = str_replace(' ', '-', $imageName);
 
-        if ($secureUploads) $imageName = str_random(16) . '-' . $imageName;
+        if ($secureUploads) {
+            $imageName = str_random(16) . '-' . $imageName;
+        }
 
         $imagePath = '/uploads/images/' . $type . '/' . Date('Y-m-M') . '/';
         while ($storage->exists($imagePath . $imageName)) {
@@ -196,9 +200,13 @@ class ImageService
 
         // Cleanup of empty folders
         foreach ($storage->directories($imageFolder) as $directory) {
-            if ($this->isFolderEmpty($directory)) $storage->deleteDirectory($directory);
+            if ($this->isFolderEmpty($directory)) {
+                $storage->deleteDirectory($directory);
+            }
         }
-        if ($this->isFolderEmpty($imageFolder)) $storage->deleteDirectory($imageFolder);
+        if ($this->isFolderEmpty($imageFolder)) {
+            $storage->deleteDirectory($imageFolder);
+        }
 
         $image->delete();
         return true;
@@ -228,7 +236,9 @@ class ImageService
      */
     private function getStorage()
     {
-        if ($this->storageInstance !== null) return $this->storageInstance;
+        if ($this->storageInstance !== null) {
+            return $this->storageInstance;
+        }
 
         $storageType = config('filesystems.default');
         $this->storageInstance = $this->fileSystem->disk($storageType);
@@ -275,6 +285,4 @@ class ImageService
 
         return ($this->storageUrl == false ? '' : rtrim($this->storageUrl, '/')) . $filePath;
     }
-
-
 }

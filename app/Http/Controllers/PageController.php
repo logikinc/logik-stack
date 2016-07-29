@@ -124,7 +124,9 @@ class PageController extends Controller
             $page = $this->pageRepo->getBySlug($pageSlug, $book->id);
         } catch (NotFoundException $e) {
             $page = $this->pageRepo->findPageUsingOldSlug($pageSlug, $bookSlug);
-            if ($page === null) abort(404);
+            if ($page === null) {
+                abort(404);
+            }
             return redirect($page->getUrl());
         }
 
@@ -177,7 +179,9 @@ class PageController extends Controller
             $warnings [] = $this->pageRepo->getUserPageDraftMessage($draft);
         }
 
-        if (count($warnings) > 0) session()->flash('warning', implode("\n", $warnings));
+        if (count($warnings) > 0) {
+            session()->flash('warning', implode("\n", $warnings));
+        }
 
         return view('pages/edit', ['page' => $page, 'book' => $book, 'current' => $page]);
     }
@@ -527,5 +531,4 @@ class PageController extends Controller
         session()->flash('success', 'Page Permissions Updated');
         return redirect($page->getUrl());
     }
-
 }

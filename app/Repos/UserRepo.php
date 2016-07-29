@@ -63,7 +63,7 @@ class UserRepo
 
         if ($sortData['search']) {
             $term = '%' . $sortData['search'] . '%';
-            $query->where(function($query) use ($term) {
+            $query->where(function ($query) use ($term) {
                 $query->where('name', 'like', $term)
                     ->orWhere('email', 'like', $term);
             });
@@ -99,7 +99,9 @@ class UserRepo
     public function attachDefaultRole($user)
     {
         $roleId = setting('registration-role');
-        if ($roleId === false) $roleId = $this->role->first()->id;
+        if ($roleId === false) {
+            $roleId = $this->role->first()->id;
+        }
         $user->attachRoleId($roleId);
     }
 
@@ -110,10 +112,14 @@ class UserRepo
      */
     public function isOnlyAdmin(User $user)
     {
-        if (!$user->roles->pluck('name')->contains('admin')) return false;
+        if (!$user->roles->pluck('name')->contains('admin')) {
+            return false;
+        }
 
         $adminRole = $this->role->getRole('admin');
-        if ($adminRole->users->count() > 1) return false;
+        if ($adminRole->users->count() > 1) {
+            return false;
+        }
         return true;
     }
 
@@ -207,5 +213,4 @@ class UserRepo
     {
         return $this->role->where('hidden', '=', false)->where('system_name', '=', '')->get();
     }
-
 }

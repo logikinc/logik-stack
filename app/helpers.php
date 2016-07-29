@@ -85,11 +85,15 @@ function sortUrl($path, $data, $overrideData = [])
     
     foreach ($queryData as $name => $value) {
         $trimmedVal = trim($value);
-        if ($trimmedVal === '') continue;
+        if ($trimmedVal === '') {
+            continue;
+        }
         $queryStringSections[] = urlencode($name) . '=' . urlencode($trimmedVal);
     }
 
-    if (count($queryStringSections) === 0) return $path;
+    if (count($queryStringSections) === 0) {
+        return $path;
+    }
 
     return $path . '?' . implode('&', $queryStringSections);
 }

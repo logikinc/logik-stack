@@ -1,6 +1,5 @@
 <?php namespace BookStack\Services;
 
-
 use BookStack\Page;
 
 class ExportService
@@ -99,17 +98,4 @@ class ExportService
         $text = $page->name . "\n\n" . $text;
         return $text;
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-

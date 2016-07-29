@@ -51,7 +51,9 @@ class BookRepo extends EntityRepo
     public function getAll($count = 10)
     {
         $bookQuery = $this->bookQuery()->orderBy('name', 'asc');
-        if (!$count) return $bookQuery->get();
+        if (!$count) {
+            return $bookQuery->get();
+        }
         return $bookQuery->take($count)->get();
     }
 
@@ -108,7 +110,9 @@ class BookRepo extends EntityRepo
     public function getBySlug($slug)
     {
         $book = $this->bookQuery()->where('slug', '=', $slug)->first();
-        if ($book === null) throw new NotFoundException('Book not found');
+        if ($book === null) {
+            throw new NotFoundException('Book not found');
+        }
         return $book;
     }
 
@@ -245,9 +249,11 @@ class BookRepo extends EntityRepo
 
         $pages = $pageQuery->get();
 
-        $chapterQuery = $book->chapters()->with(['pages' => function($query) use ($filterDrafts) {
+        $chapterQuery = $book->chapters()->with(['pages' => function ($query) use ($filterDrafts) {
             $this->permissionService->enforcePageRestrictions($query, 'view');
-            if ($filterDrafts) $query->where('draft', '=', false);
+            if ($filterDrafts) {
+                $query->where('draft', '=', false);
+            }
         }]);
         $chapterQuery = $this->permissionService->enforceChapterRestrictions($chapterQuery, 'view');
         $chapters = $chapterQuery->get();
@@ -263,18 +269,22 @@ class BookRepo extends EntityRepo
                 $child->pages->each(function ($page) use ($bookSlug) {
                     $page->setAttribute('bookSlug', $bookSlug);
                 });
-                $child->pages = $child->pages->sortBy(function($child, $key) {
+                $child->pages = $child->pages->sortBy(function ($child, $key) {
                     $score = $child->priority;
-                    if ($child->draft) $score -= 100;
+                    if ($child->draft) {
+                        $score -= 100;
+                    }
                     return $score;
                 });
             }
         });
 
         // Sort items with drafts first then by priority.
-        return $children->sortBy(function($child, $key) {
+        return $children->sortBy(function ($child, $key) {
             $score = $child->priority;
-            if ($child->isA('page') && $child->draft) $score -= 100;
+            if ($child->isA('page') && $child->draft) {
+                $score -= 100;
+            }
             return $score;
         });
     }
@@ -300,5 +310,4 @@ class BookRepo extends EntityRepo
         }
         return $books;
     }
-
 }
